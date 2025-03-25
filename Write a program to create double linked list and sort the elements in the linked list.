@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+// Node class representing a single element in the doubly linked list
+class Node {
+public:
+    int value;    // Stores the value of the node
+    Node* next;   // Pointer to the next node
+    Node* prev;   // Pointer to the previous node
+
+    // Constructor to initialize a new node
+    Node(int val) : value(val), next(nullptr), prev(nullptr) {}
+};
+
+// DoublyLinkedList class to manage the list operations
+class DoublyLinkedList {
+private:
+    Node* head; // Pointer to the first node of the list
+
+public:
+    // Constructor initializes an empty list
+    DoublyLinkedList() : head(nullptr) {}
+
+    // Function to create a doubly linked list by inserting multiple values
+    void createList() {
+        int val;
+        cout << "Enter values (-1 to stop): ";
+        while (cin >> val && val != -1) {
+            addNode(val); // Insert the value at the end of the list
+        }
+        cout << "Doubly Linked List created successfully.\n";
+    }
+
+    // Function to insert a new node at the end of the list
+    void addNode(int val) {
+        Node* newNode = new Node(val); // Create a new node with the given value
+
+        if (!head) { // If the list is empty, set head to newNode
+            head = newNode;
+        } else {
+            Node* temp = head;
+            while (temp->next) temp = temp->next; // Traverse to the last node
+            temp->next = newNode; // Attach newNode at the end
+            newNode->prev = temp; // Set previous pointer
+        }
+    }
+
+    // Function to display the linked list elements
+    void displayList() {
+        if (!head) {
+            cout << "List is empty.\n";
+            return;
+        }
+
+        Node* temp = head;
+        cout << "Doubly Linked List: ";
+        while (temp) { // Traverse and print the list
+            cout << temp->value << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+
+    // Function to sort the doubly linked list (Bubble Sort)
+    void sortList() {
+        if (!head) return; // If list is empty, no need to sort
+
+        for (Node* i = head; i; i = i->next) {
+            for (Node* j = i->next; j; j = j->next) {
+                if (i->value > j->value) { // Swap if not in order
+                    swap(i->value, j->value);
+                }
+            }
+        }
+    }
+
+    // Destructor to free memory and avoid memory leaks
+    ~DoublyLinkedList() {
+        while (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+
+
+int main() {
+    DoublyLinkedList list; // Create an object of DoublyLinkedList class
+
+    list.createList(); // Create the linked list by taking user input
+    list.displayList(); // Display the list
+
+    cout << "Sorted List:\n";
+    list.sortList(); // Sort the list
+    list.displayList(); // Display the sorted list
+
+    return 0; // End of the program
+}
