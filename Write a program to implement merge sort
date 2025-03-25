@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+
+// MergeSort class to handle sorting
+class MergeSort {
+public:
+    // Function to perform merge sort
+    void sort(int arr[], int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+
+            sort(arr, left, mid);      // Sort left half
+            sort(arr, mid + 1, right); // Sort right half
+            merge(arr, left, mid, right);
+        }
+    }
+
+private:
+    // Function to merge two sorted halves
+    void merge(int arr[], int left, int mid, int right) {
+        int temp[right - left + 1], i = left, j = mid + 1, k = 0;
+
+        while (i <= mid && j <= right)  
+            temp[k++] = (arr[i] < arr[j]) ? arr[i++] : arr[j++];
+
+        while (i <= mid) temp[k++] = arr[i++];
+        while (j <= right) temp[k++] = arr[j++];
+
+        for (i = left, k = 0; i <= right; i++, k++)  
+            arr[i] = temp[k];  
+    }
+};
+
+int main() {
+    int arr[] = {38, 27, 43, 3, 9, 82, 10};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    MergeSort sorter; // Create an object of the MergeSort class
+    sorter.sort(arr, 0, n - 1);
+
+    cout << "Sorted Array: ";
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+
+    return 0;
+}
