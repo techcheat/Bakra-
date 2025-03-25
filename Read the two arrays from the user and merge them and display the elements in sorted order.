@@ -1,0 +1,62 @@
+#include <stdio.h>// header file, no need of getch() and conio.h 
+
+void mergeAndSort(int arr1[], int size1, int arr2[], int size2, int arr3[]);
+// thus is a function Prototype which will tell the compiler that we will define mergeAndSort() later in the program.
+
+int main() {
+    int arr1[20], arr2[20], arr3[40];
+    int i, size1, size2;
+// here arr1[20] , arr2[20] ate 2 arrays which will store a set of elements for 1st and 2nd array input by user.
+
+//arr3[40] is the merged array in Which the size of arr1 and size of arr2 will get add i.e arr[40]=arr[20]+arr[20]
+
+
+ // 1st input stm taking input for first array
+    printf("Enter the size of array 1: ");
+    scanf("%d", &size1);
+    printf("Enter %d elements in array 1:\n", size1);
+    for(i = 0; i < size1; i++)
+        scanf("%d", &arr1[i]);
+
+// 2nd input stm taking input for second array
+    printf("Enter the size of array 2: ");
+    scanf("%d", &size2);
+    printf("Enter %d elements in array 2:\n", size2);
+    for(i = 0; i < size2; i++)
+        scanf("%d", &arr2[i]);
+
+//this is a function call which will merge both arrays taken input into arr3[] and sorts it.
+   mergeAndSort(arr1, size1, arr2, size2, arr3);
+
+    // Displaying merged sorted array
+    printf("Merged and Sorted Array:\n");
+    for(i = 0; i < size1 + size2; i++)
+        printf("%d ", arr3[i]);
+    printf("\n");
+// this will loop through arr3[] and print all the element In sorted order.
+    return 0;
+}
+
+// Function to merge and sort two arrays
+void mergeAndSort(int arr1[], int size1, int arr2[], int size2, int arr3[]) {
+    int i, j, k, temp;
+
+    // Copying elements of both arrays into arr3
+    for(i = 0; i < size1; i++)
+        arr3[i] = arr1[i]; // cpy arr1 elements to arr3
+    for(j = 0; j < size2; j++)
+        arr3[size1 + j] = arr2[j]; // cpy arr2 elements to arr3
+
+//till here arr3[] contains all elements from both array but still not sorted 
+
+    // Sorting the merged array using Bubble Sort
+    for(i = 0; i < (size1 + size2) - 1; i++) {
+        for(j = 0; j < (size1 + size2) - i - 1; j++) {
+            if(arr3[j] > arr3[j + 1]) {
+                temp = arr3[j];
+                arr3[j] = arr3[j + 1];
+                arr3[j + 1] = temp;
+            }
+        }
+    }
+}
