@@ -1,0 +1,86 @@
+#include <stdio.h>  // No need for conio.h in modern compilers 
+
+int arr[20], size; // a global variable of array and size is declared.
+
+//Function Prototypes getting declared to carry out operations.
+void disp(); // works to print array
+void sort(); // works to sort the array
+void reverse(); // works to reverse array 
+void search(int val); // works to find the element of array given by user whether it exists or not.
+
+int main() {
+    int ch, val; // variables declared( ch for taking user Menu choice and val for the element to search in a array.)
+    
+    printf("Enter array size: ");
+    scanf("%d", &size); //1st user input stm asking no. of Elements they want to store i.e size.
+
+    printf("Enter %d elements: ", size);
+    for(int i = 0; i < size; i++)  
+        scanf("%d", &arr[i]); // 2nd User input stm taking array elements one-by-one in a linear manner reading form into arr[i] using for-loop to take repetitive element from user.
+
+    do {
+        printf("\n**** Menu ****\n");
+        printf("1.Display  2.Sort  3.Reverse  4.Search  5.Exit\n"); //Display Menu list consisting names of operations performed further Using do while loop until Exit.
+        printf("Enter choice: ");
+        scanf("%d", &ch); // 3rd user input asking for the choice i.e which operation to be performed among the Menu list displayed above.
+
+        switch(ch) { 
+//handling user choices of selecting the operations to be performed using switch case
+            case 1: disp(); break;
+            case 2: sort(); break;
+            case 3: reverse(); break;
+            case 4: 
+                printf("Enter value to search: ");
+                scanf("%d", &val);
+                search(val); 
+                break;
+            case 5: return 0;
+            default: printf("Invalid choice! Try again.\n");
+        }
+    } while(1);  // No syntax error, but ensuring infinite loop until choice is 5
+}
+
+// Function to display array elements
+void disp() {
+    printf("Array: ");
+    for(int i = 0; i < size; i++)  
+        printf("%d ", arr[i]);
+    printf("\n");
+} // this Function consist of methods for operation to display each element in one line using for loop.
+
+
+// Function to sort array using Bubble Sort
+void sort() {
+for(int i = 0; i < size - 1; i++) {                     for(int j = 0; j < size - i - 1; j++) {
+            if(arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+    printf("Sorted ");
+    disp();
+}
+
+// Function to reverse the array
+void reverse() {
+    for(int i = 0, j = size - 1; i < j; i++, j--) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    printf("Reversed ");
+    disp();
+}
+
+// Function to search for an element in the array
+void search(int val) {
+    for(int i = 0; i < size; i++) {
+        if(arr[i] == val) {
+            printf("Value found at position %d.\n", i);
+            return;
+        }
+    }
+    printf("Value not found.\n");
+}
